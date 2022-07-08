@@ -1,1 +1,1 @@
-docker container ls -a | grep 01container
+docker container ls -a --filter name='01container'

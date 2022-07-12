@@ -9,10 +9,14 @@ services:
       - REACT_APP_API_HOST=backend
     depends_on:
       - todobackend
+    networks:
+      - network1
   todoback:
     image: ./todo-app/back-end/
     ports:
       - 3001
+    networks:
+      - network1
   todotests:
     image: ./todo-app/tests/
     environment:
@@ -20,3 +24,7 @@ services:
     depends_on:
       - todobackend
       - todofrontend
+    networks:
+      - network1
+networks:
+  - network1

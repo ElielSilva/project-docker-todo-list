@@ -1,25 +1,27 @@
-version: '3'
-
+version: "3"
 services:
-  todofront:
-    image: ./todo-app/front-end/
-    ports:
-      - "3000:3000"
-    environment:
-      - REACT_APP_API_HOST=backend
-    depends_on:
-      - todobackend
-
   todoback:
-    image: ./todo-app/back-end/
-    ports:
-      - "3001:3001"
+    image: todobackend
+    ports: 
+      - 3001:3001
+    restart: always
+
+  todofront:
+    image: todofrontend
+    ports: 
+      - 3000:3000
+    environment:
+      REACT_APP_API_HOST: todoback
+      REACT_APP_API_PORT: 3001
+    depends_on: 
+      - todoback
+    restart: always
 
   todotests:
-    image: ./todo-app/tests/
+    image: todotests
     environment:
-      FRONT_HOST:frontend
+      FRONT_HOST: todofront
     depends_on:
-      - todobackend
-      - todofrontend
-    
+      - todoback
+      - todofront
+    restart: always
